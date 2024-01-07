@@ -1,0 +1,17 @@
+{
+  "name": "seenekaart",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "goblin",
+  "license": "ISC",
+  "dependencies": {
+    "@types/geojson": "^7946.0.13",
+    "@types/leaflet": "^1.9.8",
+    "georaster": "^1.6.0",
+    "georaster-layer-for-leaflet": "^3.10.0"
+  }
+}
