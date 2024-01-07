@@ -19,7 +19,7 @@ fetch(url_to_geotiff_file)
         var layer = new GeoRasterLayer({
             georaster: georaster,
             opacity: 0.7,
-            pixelValuesToColorFn: function (values) { return values[0] == 1 ? '#ff0000' : '#000000'; },
+            pixelValuesToColorFn: function (values) { return values[0] == 1 ? '#ff0000' : ''; },
             resolution: 64 // optional parameter for adjusting display resolution
         });
         layer.addTo(map);
