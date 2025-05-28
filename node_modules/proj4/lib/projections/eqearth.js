@@ -27,13 +27,13 @@
  * Modified for proj4js by Andreas Hocevar by Andreas Hocevar March 2024
  */
 
-import adjust_lon from "../common/adjust_lon";
+import adjust_lon from '../common/adjust_lon';
 
 var A1 = 1.340264,
-    A2 = -0.081106,
-    A3 = 0.000893,
-    A4 = 0.003796,
-    M = Math.sqrt(3) / 2.0;
+  A2 = -0.081106,
+  A3 = 0.000893,
+  A4 = 0.003796,
+  M = Math.sqrt(3) / 2.0;
 
 export function init() {
   this.es = 0;
@@ -44,10 +44,10 @@ export function forward(p) {
   var lam = adjust_lon(p.x - this.long0);
   var phi = p.y;
   var paramLat = Math.asin(M * Math.sin(phi)),
-  paramLatSq = paramLat * paramLat,
-  paramLatPow6 = paramLatSq * paramLatSq * paramLatSq;
-  p.x = lam * Math.cos(paramLat) /
-  (M * (A1 + 3 * A2 * paramLatSq + paramLatPow6 * (7 * A3 + 9 * A4 * paramLatSq)));
+    paramLatSq = paramLat * paramLat,
+    paramLatPow6 = paramLatSq * paramLatSq * paramLatSq;
+  p.x = lam * Math.cos(paramLat)
+    / (M * (A1 + 3 * A2 * paramLatSq + paramLatPow6 * (7 * A3 + 9 * A4 * paramLatSq)));
   p.y = paramLat * (A1 + A2 * paramLatSq + paramLatPow6 * (A3 + A4 * paramLatSq));
 
   p.x = this.a * p.x + this.x0;
@@ -60,9 +60,9 @@ export function inverse(p) {
   p.y = (p.y - this.y0) / this.a;
 
   var EPS = 1e-9,
-      NITER = 12,
-      paramLat = p.y,
-      paramLatSq, paramLatPow6, fy, fpy, dlat, i;
+    NITER = 12,
+    paramLat = p.y,
+    paramLatSq, paramLatPow6, fy, fpy, dlat, i;
 
   for (i = 0; i < NITER; ++i) {
     paramLatSq = paramLat * paramLat;
@@ -71,20 +71,20 @@ export function inverse(p) {
     fpy = A1 + 3 * A2 * paramLatSq + paramLatPow6 * (7 * A3 + 9 * A4 * paramLatSq);
     paramLat -= dlat = fy / fpy;
     if (Math.abs(dlat) < EPS) {
-        break;
+      break;
     }
   }
   paramLatSq = paramLat * paramLat;
   paramLatPow6 = paramLatSq * paramLatSq * paramLatSq;
-  p.x = M * p.x * (A1 + 3 * A2 * paramLatSq + paramLatPow6 * (7 * A3 + 9 * A4 * paramLatSq)) /
-          Math.cos(paramLat);
+  p.x = M * p.x * (A1 + 3 * A2 * paramLatSq + paramLatPow6 * (7 * A3 + 9 * A4 * paramLatSq))
+    / Math.cos(paramLat);
   p.y = Math.asin(Math.sin(paramLat) / M);
 
   p.x = adjust_lon(p.x + this.long0);
   return p;
 }
 
-export var names = ["eqearth", "Equal Earth", "Equal_Earth"];
+export var names = ['eqearth', 'Equal Earth', 'Equal_Earth'];
 export default {
   init: init,
   forward: forward,
